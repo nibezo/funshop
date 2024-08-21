@@ -1,29 +1,35 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import sadHamster from "/hamster.webp";
-import "./App.scss";
-import Card from "./components/Card/Card";
-import Bar from "./components/Bar/Bar";
 
-function App() {
+import "./App.scss";
+import Login from "./components/Login/Login";
+
+import Bar from "./components/Bar/Bar";
+import Shop from "./components/Shop/Shop";
+import Cart from "./components/Cart/Cart";
+import UpdateCart from "./components/UpdateCart/UpdateCart";
+
+function Main({ setLogin }) {
+  const [tab, setTab] = useState("Shop");
   return (
     <>
       <h1>Fun Shop</h1>
-      <Bar />
-      <div className="shop">
-        {Array.from({ length: 10 }).map((_, i) => (
-          <Card
-            className="shop__item"
-            key={i}
-            title={`Shop item ${i + 1}`}
-            description="Sad hamster"
-            imageUrl={sadHamster}
-            price={(Math.random() * 100).toFixed(0)}
-          />
-        ))}
-      </div>
+      <Bar setLogin={setLogin} setTab={setTab} />
+      {tab === "Shop" && <Shop />}
+      {tab === "Cart" && <Cart setTab={setTab} />}
+      {tab === "UpdateCart" && <UpdateCart />}
     </>
   );
 }
 
+function App() {
+  const [login, setLogin] = useState(false);
+  return (
+    <>
+      {!login && <Login setLogin={setLogin} />}
+      {login && <Main setLogin={setLogin} />}
+    </>
+  );
+}
+{
+}
 export default App;

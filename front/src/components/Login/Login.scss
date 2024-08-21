@@ -1,0 +1,9 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 230px;
+  & input {
+    font-size: 24px;
+  }
+}

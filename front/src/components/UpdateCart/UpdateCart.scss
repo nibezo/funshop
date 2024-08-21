@@ -1,0 +1,13 @@
+.update {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  &__input,
+  &__button {
+    font-size: 24px;
+  }
+  &__form {
+    display: flex;
+    gap: 20px;
+  }
+}

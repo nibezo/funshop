@@ -16,7 +16,9 @@
 #root {
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
+  width: 100%;
 }
 
 a {
@@ -39,7 +41,8 @@ h1 {
   line-height: 1.1;
 }
 
-button {
+button,
+input {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -48,14 +51,17 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.25s;
 }
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+button:focus-visible,
+input:focus,
+input:focus-visible {
+  outline: 0px;
 }
 
 @media (prefers-color-scheme: light) {
