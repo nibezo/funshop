@@ -12,6 +12,7 @@ export default function Shop() {
           <Card
             className="shop__item"
             key={i}
+            unicID={i}
             title={`Shop item ${i + 1}`}
             description="Sad hamster"
             imageUrl={sadHamster}

@@ -7,9 +7,10 @@ export default function Card({
   imageUrl,
   price,
   className,
+  unicID,
 }) {
   return (
-    <div className={`card ${className}`}>
+    <div className={`card ${className}`} unicid={unicID}>
       <img src={imageUrl} alt={title} className="card__image" />
       <h2 className="card__title">{title}</h2>
       <p className="card__description">{description}</p>
