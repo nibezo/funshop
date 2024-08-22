@@ -10,7 +10,14 @@ export default function Login({ setLogin }) {
         className="login__password"
         placeholder="Password"
       />
-      <button className="login__enter" onClick={() => setLogin(true)}>
+      <button
+        className="login__enter"
+        onClick={() => {
+          setLogin(true);
+          console.log(document.querySelector(".login__login").value);
+          console.log(document.querySelector(".login__password").value);
+        }}
+      >
         Enter
       </button>
     </div>

@@ -8,6 +8,7 @@
   width: 200px;
   background-color: #464ba7;
   border-radius: 8px;
+
   &__image {
     height: 200px;
     border-radius: 5px;
@@ -19,5 +20,35 @@
   &__description {
     font-size: 16px;
     margin: 0;
+  }
+  &__price {
+    font-size: 14px;
+    width: max-content;
+  }
+  &__button {
+    &-calc {
+      display: flex;
+      align-items: center;
+      height: 21px;
+      gap: 16px;
+    }
+    &-sign {
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background-color: #1a1a1a;
+      cursor: pointer;
+      transition: all 0.25s;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      &:hover {
+        cursor: pointer;
+        background-color: #646cff;
+        border: 1px solid #646cff;
+      }
+    }
   }
 }
