@@ -1,6 +1,9 @@
 import "./Login.scss";
+import { useNavigate } from "react-router-dom";
 
-export default function Login({ setLogin }) {
+export default function Login() {
+  const navigateToMain = useNavigate();
+
   return (
     <div className="login">
       <h1 style={{ textAlign: "center" }}>Welcome | Fun Shop</h1>
@@ -13,7 +16,7 @@ export default function Login({ setLogin }) {
       <button
         className="login__enter"
         onClick={() => {
-          setLogin(true);
+          navigateToMain("/main");
           console.log(document.querySelector(".login__login").value);
           console.log(document.querySelector(".login__password").value);
         }}

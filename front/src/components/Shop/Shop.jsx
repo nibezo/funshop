@@ -1,5 +1,7 @@
 import Card from "../Card/Card";
 import sadHamster from "/hamster.webp";
+import "./Shop.scss";
+
 const prices = Array.from({ length: 12 }, () =>
   Math.floor(Math.random() * 101)
 );
@@ -20,7 +22,6 @@ export default function Shop() {
           />
         ))}
       </div>
-      ;
     </>
   );
 }
