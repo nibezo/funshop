@@ -6,7 +6,7 @@ const prices = Array.from({ length: 12 }, () =>
   Math.floor(Math.random() * 101)
 );
 
-export default function Shop() {
+export default function Shop({ addItem }) {
   return (
     <>
       <div className="shop">
@@ -15,10 +15,11 @@ export default function Shop() {
             className="shop__item"
             key={i}
             unicID={i}
-            title={`Shop item ${i + 1}`}
-            description="Sad hamster"
+            title={`Sad hamster ${i + 1}`}
+            description="It's a hamster"
             imageUrl={sadHamster}
             price={prices[i]}
+            addItem={addItem}
           />
         ))}
       </div>

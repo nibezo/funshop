@@ -7,24 +7,38 @@ export default function Card({
   price,
   className,
   unicID,
+  addItem,
 }) {
   const [count, setCount] = useState(0);
   function initPriceCalculate() {
     if (!count) {
       setCount(count + 1);
+      addItem(unicID, title, price, 1);
     }
   }
 
   function CalculatePrice() {
     return (
       <div className="card__button-calc">
-        <div className="card__button-sign" onClick={() => setCount(count + 1)}>
+        <div
+          className="card__button-sign"
+          onClick={() => {
+            setCount(count + 1);
+            addItem(unicID, title, price, count + 1);
+          }}
+        >
           +
         </div>
         <p className="card__price">
           {count} | {price * count}💎
         </p>
-        <div className="card__button-sign" onClick={() => setCount(count - 1)}>
+        <div
+          className="card__button-sign"
+          onClick={() => {
+            setCount(count - 1);
+            addItem(unicID, title, price, count - 1);
+          }}
+        >
           -
         </div>
       </div>
