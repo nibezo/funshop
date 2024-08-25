@@ -10,7 +10,7 @@ export default function Bar({ count, price }) {
         Shop🏬
       </button>
       <button className="bar__button" onClick={() => navigate("Cart")}>
-        Cart | Count {count} | Price {price}🛒
+        Cart | Count {count} | Price {price}💎
       </button>
       <button className="bar__button" onClick={() => navigate("UpdateCart")}>
         Update a cart 🆔

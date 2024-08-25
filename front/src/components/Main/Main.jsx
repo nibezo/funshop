@@ -42,8 +42,21 @@ export default function Main() {
         <Route path="/" element={<Navigate to="Shop" />} />
 
         {/* Other routes */}
-        <Route path="Shop" element={<Shop addItem={addItem} />} />
-        <Route path="Cart" element={<Cart cart={cart} />} />
+        <Route
+          path="Shop"
+          element={<Shop addItem={addItem} setCart={setCart} />}
+        />
+        <Route
+          path="Cart"
+          element={
+            <Cart
+              cart={cart}
+              setCart={setCart}
+              setCount={setCount}
+              setTotalPrice={setTotalPrice}
+            />
+          }
+        />
         <Route path="UpdateCart" element={<UpdateCart />} />
       </Routes>
     </>
