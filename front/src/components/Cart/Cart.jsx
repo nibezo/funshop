@@ -19,7 +19,37 @@ function EmptyCart({ navigate }) {
   );
 }
 
-function CartItem({ unicID, name, price, quantity }) {
+function CartItem({
+  unicID,
+  name,
+  price,
+  quantity,
+  cart,
+  setCart,
+  setCount,
+  setTotalPrice,
+}) {
+  function changeQuantity(cart, setCart, unicID, operation) {
+    let updatedCart = { ...cart };
+    if (operation === "increment") {
+      updatedCart[unicID].quantity += 1;
+      setCount((prevCount) => prevCount + 1);
+    } else {
+      updatedCart[unicID].quantity -= 1;
+      setCount((prevCount) => prevCount - 1);
+      if (updatedCart[unicID].quantity <= 0) {
+        delete updatedCart[unicID];
+      }
+    }
+    let newTotalPrice = 0;
+
+    for (const item in updatedCart) {
+      newTotalPrice += updatedCart[item].quantity * updatedCart[item].price;
+    }
+    setTotalPrice(newTotalPrice);
+    setCart(updatedCart);
+  }
+
   return (
     <div className="cart-item">
       <div className="cart-item__subs">
@@ -30,7 +60,7 @@ function CartItem({ unicID, name, price, quantity }) {
           Title: <b>{name}</b>; &nbsp;
         </p>
         <p className="cart-item__sub">
-          Price: <b>{price}</b>; &nbsp;
+          Price: <b>{price * quantity}</b>; &nbsp;
         </p>
         <p className="cart-item__sub">
           Quantity: <b>{quantity}</b>. &nbsp;
@@ -40,9 +70,19 @@ function CartItem({ unicID, name, price, quantity }) {
         </b>
       </div>
       <div className="cart-item__btns">
-        <button className="cart-item__btns-btn">+</button>
+        <button
+          className="cart-item__btns-btn"
+          onClick={() => changeQuantity(cart, setCart, unicID, "increment")}
+        >
+          +
+        </button>
         <span className="cart-item__btns-count">{quantity}</span>
-        <button className="cart-item__btns-btn">-</button>
+        <button
+          className="cart-item__btns-btn"
+          onClick={() => changeQuantity(cart, setCart, unicID, "decrement")}
+        >
+          -
+        </button>
       </div>
     </div>
   );
@@ -71,6 +111,8 @@ function CartList({ cart, setCart, setTotalPrice, setCount }) {
             quantity={item.quantity}
             cart={cart}
             setCart={setCart}
+            setTotalPrice={setTotalPrice}
+            setCount={setCount}
           />
         ))}
       </div>
@@ -78,7 +120,7 @@ function CartList({ cart, setCart, setTotalPrice, setCount }) {
   );
 }
 
-export default function Cart({ cart, setCart, setTotalPrice, setCount }) {
+export default function Cart({ cart, setCart, setCount, setTotalPrice }) {
   const navigate = useNavigate();
 
   return (
