@@ -22,21 +22,28 @@ function EmptyCart({ navigate }) {
 function CartItem({ unicID, name, price, quantity }) {
   return (
     <div className="cart-item">
-      <p className="cart-item__sub">
-        ID: <b>{unicID}</b>; &nbsp;
-      </p>
-      <p className="cart-item__sub">
-        Title: <b>{name}</b>; &nbsp;
-      </p>
-      <p className="cart-item__sub">
-        Price: <b>{price}</b>; &nbsp;
-      </p>
-      <p className="cart-item__sub">
-        Quantity: <b>{quantity}</b>. &nbsp;
-      </p>
-      <b className="cart-item__sub-total">
-        Total price is <b>{quantity * price}</b>
-      </b>
+      <div className="cart-item__subs">
+        <p className="cart-item__sub">
+          ID: <b>{unicID}</b>; &nbsp;
+        </p>
+        <p className="cart-item__sub">
+          Title: <b>{name}</b>; &nbsp;
+        </p>
+        <p className="cart-item__sub">
+          Price: <b>{price}</b>; &nbsp;
+        </p>
+        <p className="cart-item__sub">
+          Quantity: <b>{quantity}</b>. &nbsp;
+        </p>
+        <b className="cart-item__sub-total">
+          Total price is <b>{quantity * price}</b>
+        </b>
+      </div>
+      <div className="cart-item__btns">
+        <button className="cart-item__btns-btn">+</button>
+        <span className="cart-item__btns-count">{quantity}</span>
+        <button className="cart-item__btns-btn">-</button>
+      </div>
     </div>
   );
 }

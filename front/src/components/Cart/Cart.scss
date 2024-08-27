@@ -8,14 +8,30 @@
     row-gap: 20px;
     padding-top: 20px;
   }
-
   &-item {
     width: 835px;
     padding: 0px 20px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     border-radius: 5px;
     background-color: rgb(59, 59, 59);
+    &__subs {
+      display: flex;
+      align-items: center;
+    }
+    &__btns {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      &-btn {
+        width: 40px;
+      }
+      &-count {
+        width: 30px;
+        text-align: center;
+      }
+    }
     &__sub {
       &-total {
         & b {
