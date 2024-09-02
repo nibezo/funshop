@@ -1,4 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+import ModalID from "../ModalID/ModalID";
 
 import "./Cart.scss";
 
@@ -30,23 +33,25 @@ function CartItem({
   setTotalPrice,
 }) {
   function changeQuantity(cart, setCart, unicID, operation) {
-    let updatedCart = { ...cart };
+    const updatedCart = [...cart];
+    const element = updatedCart.find((obj) => obj.unicID == unicID);
+
     if (operation === "increment") {
-      updatedCart[unicID].quantity += 1;
-      setCount((prevCount) => prevCount + 1);
-    } else {
-      updatedCart[unicID].quantity -= 1;
-      setCount((prevCount) => prevCount - 1);
-      if (updatedCart[unicID].quantity <= 0) {
-        delete updatedCart[unicID];
+      setCount((prev) => prev + 1);
+      updatedCart[updatedCart.indexOf(element)].quantity = quantity + 1;
+      setTotalPrice(
+        updatedCart.reduce((acc, obj) => acc + obj.price * obj.quantity, 0)
+      );
+    } else if (operation === "decrement") {
+      setCount((prev) => prev - 1);
+      updatedCart[updatedCart.indexOf(element)].quantity = quantity - 1;
+      setTotalPrice(
+        updatedCart.reduce((acc, obj) => acc + obj.price * obj.quantity, 0)
+      );
+      if (updatedCart[updatedCart.indexOf(element)].quantity === 0) {
+        updatedCart.splice(updatedCart.indexOf(element), 1);
       }
     }
-    let newTotalPrice = 0;
-
-    for (const item in updatedCart) {
-      newTotalPrice += updatedCart[item].quantity * updatedCart[item].price;
-    }
-    setTotalPrice(newTotalPrice);
     setCart(updatedCart);
   }
 
@@ -60,7 +65,7 @@ function CartItem({
           Title: <b>{name}</b>; &nbsp;
         </p>
         <p className="cart-item__sub">
-          Price: <b>{price * quantity}</b>; &nbsp;
+          Price: <b>{price}</b>; &nbsp;
         </p>
         <p className="cart-item__sub">
           Quantity: <b>{quantity}</b>. &nbsp;
@@ -89,7 +94,7 @@ function CartItem({
 }
 
 function CartList({ cart, setCart, setTotalPrice, setCount }) {
-  const cartArray = Object.keys(cart).map((key) => cart[key]);
+  const [isModal, setIsModal] = useState(false);
   return (
     <>
       <button
@@ -102,7 +107,7 @@ function CartList({ cart, setCart, setTotalPrice, setCount }) {
         Empty your shopping cart ❌
       </button>
       <div className="cart__list">
-        {cartArray.map((item) => (
+        {cart.map((item) => (
           <CartItem
             key={item.unicID}
             unicID={item.unicID}
@@ -116,6 +121,16 @@ function CartList({ cart, setCart, setTotalPrice, setCount }) {
           />
         ))}
       </div>
+      <button className="cart__complete-btn" onClick={() => setIsModal(true)}>
+        Complete your order and get the cart ID
+      </button>
+      <ModalID
+        isModal={isModal}
+        setIsModal={setIsModal}
+        setCart={setCart}
+        setCount={setCount}
+        setTotalPrice={setTotalPrice}
+      />
     </>
   );
 }

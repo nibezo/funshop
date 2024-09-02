@@ -1,0 +1,32 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.94);
+  &__copied {
+    font-size: 32px;
+    margin: 0;
+  }
+  &__text {
+    font-size: 32px;
+    margin: 0;
+    & b {
+      transition: 0.3s;
+      color: #00985f;
+      cursor: pointer;
+      &:hover {
+        color: #2bf7ac;
+      }
+      &:active {
+        color: #58c798;
+      }
+    }
+  }
+}

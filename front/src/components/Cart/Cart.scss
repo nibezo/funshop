@@ -8,6 +8,13 @@
     row-gap: 20px;
     padding-top: 20px;
   }
+  &__complete-btn {
+    margin-top: 10px;
+    background-color: #00985f;
+    &:hover {
+      border-color: #016b44;
+    }
+  }
   &-item {
     width: 835px;
     padding: 0px 20px;

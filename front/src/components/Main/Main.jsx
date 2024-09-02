@@ -9,28 +9,31 @@ import Cart from "../Cart/Cart";
 import UpdateCart from "../UpdateCart/UpdateCart";
 
 export default function Main() {
-  const [cart, setCart] = useState({});
+  const [cart, setCart] = useState([]);
   const [count, setCount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
   function addItem(unicID, name, price, quantity) {
-    let updatedCart = { ...cart };
-
+    const updatedCart = [...cart];
+    const element = updatedCart.find((obj) => obj.unicID == unicID);
     if (quantity) {
-      updatedCart[unicID] = { unicID, name, price, quantity };
+      const hasElement = updatedCart.some((obj) => obj.unicID == unicID);
+      if (hasElement) {
+        updatedCart[updatedCart.indexOf(element)].quantity = quantity;
+      } else {
+        updatedCart.push({ unicID, name, price, quantity });
+      }
     } else {
-      delete updatedCart[unicID];
+      if (quantity === 0) {
+        updatedCart.splice(updatedCart.indexOf(element), 1);
+      }
     }
+    setCount(updatedCart.reduce((acc, obj) => acc + obj.quantity, 0));
+    setTotalPrice(
+      updatedCart.reduce((acc, obj) => acc + obj.price * obj.quantity, 0)
+    );
+    console.log(updatedCart);
     setCart(updatedCart);
-    let newCount = 0;
-    let newTotalPrice = 0;
-
-    for (const item in updatedCart) {
-      newCount += updatedCart[item].quantity;
-      newTotalPrice += updatedCart[item].quantity * updatedCart[item].price;
-    }
-    setCount(newCount);
-    setTotalPrice(newTotalPrice);
   }
 
   return (
