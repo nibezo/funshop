@@ -201,4 +201,4 @@ def get_all_carts(db: SessionLocal = Depends(get_db), user: User = Depends(get_c
     carts = json.loads(user.user_carts or '{}')  # Ensure carts is a valid JSON string
     
     # Return all carts
-    return {"carts": carts}
+    return carts
