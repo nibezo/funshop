@@ -193,3 +193,12 @@ def delete_cart(cart_id: str = Query(...), db: SessionLocal = Depends(get_db), u
     db.commit()
 
     return {"detail": "Cart deleted"}
+
+# Get all carts for the current user
+@app.get("/carts")
+def get_all_carts(db: SessionLocal = Depends(get_db), user: User = Depends(get_current_user)):
+    # Load the user's carts
+    carts = json.loads(user.user_carts or '{}')  # Ensure carts is a valid JSON string
+    
+    # Return all carts
+    return {"carts": carts}

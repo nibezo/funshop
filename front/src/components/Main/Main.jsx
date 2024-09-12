@@ -39,6 +39,12 @@ export default function Main() {
   return (
     <>
       <h1>Fun Shop</h1>
+      <span>
+        Welcome,{" "}
+        <span style={{ color: "#00985f", fontWeight: "bold" }}>
+          {localStorage.getItem("username")}
+        </span>
+      </span>
       <Bar count={count} price={totalPrice} />
       <Routes>
         {/* Default route */}

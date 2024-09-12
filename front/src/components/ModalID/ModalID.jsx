@@ -7,6 +7,7 @@ export default function ModalID({
   setCart,
   setCount,
   setTotalPrice,
+  cartId,
 }) {
   const [isCopied, setIsCopied] = useState(false);
   return (
@@ -21,7 +22,7 @@ export default function ModalID({
                 setIsCopied(true);
               }}
             >
-              123456
+              {cartId}
             </b>
           </p>
           <button

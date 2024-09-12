@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import axios from "axios";
 import ModalID from "../ModalID/ModalID";
 
 import "./Cart.scss";
@@ -95,6 +95,7 @@ function CartItem({
 
 function CartList({ cart, setCart, setTotalPrice, setCount }) {
   const [isModal, setIsModal] = useState(false);
+  const [cartId, setCartId] = useState(0);
   return (
     <>
       <button
@@ -121,7 +122,31 @@ function CartList({ cart, setCart, setTotalPrice, setCount }) {
           />
         ))}
       </div>
-      <button className="cart__complete-btn" onClick={() => setIsModal(true)}>
+      <button
+        className="cart__complete-btn"
+        onClick={() => {
+          axios
+            .post(
+              "http://funshop-backend-8077bd-25d50d-89-23-116-185.traefik.me/addCart",
+              cart, // Send JSON data in the POST request
+              {
+                headers: {
+                  "Content-Type": "application/json", // Set content type to JSON
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "access_token"
+                  )}`, // Add "Bearer" before token
+                },
+              }
+            )
+            .then((res) => {
+              setCartId(res.data.cart_id);
+            })
+            .catch((err) => {
+              console.error(err); // Change to `console.error` for better logging of errors
+            });
+          setIsModal(true); // Ensure this function is updating the state correctly
+        }}
+      >
         Complete your order and get the cart ID
       </button>
       <ModalID
@@ -129,6 +154,7 @@ function CartList({ cart, setCart, setTotalPrice, setCount }) {
         setIsModal={setIsModal}
         setCart={setCart}
         setCount={setCount}
+        cartId={cartId}
         setTotalPrice={setTotalPrice}
       />
     </>
