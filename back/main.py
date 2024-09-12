@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException, Query
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+`from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
@@ -9,8 +10,18 @@ from jose import JWTError, jwt
 from typing import Dict, List
 import json
 
+
 # FastAPI instance
 app = FastAPI()
+
+# Add CORS middleware to allow all origins and methods
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 
 # SQLite setup
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
