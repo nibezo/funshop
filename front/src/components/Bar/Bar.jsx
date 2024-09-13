@@ -15,6 +15,9 @@ export default function Bar({ count, price }) {
       <button className="bar__button" onClick={() => navigate("UpdateCart")}>
         Update a cart 🆔
       </button>
+      <button className="bar__button" onClick={() => navigate("CartList")}>
+        🛒
+      </button>
       <button
         className="bar__button"
         onClick={() => {

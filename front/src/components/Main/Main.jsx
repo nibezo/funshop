@@ -7,6 +7,7 @@ import Bar from "../Bar/Bar";
 import Shop from "../Shop/Shop";
 import Cart from "../Cart/Cart";
 import UpdateCart from "../UpdateCart/UpdateCart";
+import CartList from "../CartList/CartList";
 
 export default function Main() {
   const [cart, setCart] = useState([]);
@@ -67,6 +68,7 @@ export default function Main() {
           }
         />
         <Route path="UpdateCart" element={<UpdateCart />} />
+        <Route path="CartList" element={<CartList />} />
       </Routes>
     </>
   );

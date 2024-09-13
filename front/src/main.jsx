@@ -29,6 +29,9 @@ const router = createBrowserRouter([
   {
     path: "/UpdateCart",
   },
+  {
+    path: "/CartList",
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(

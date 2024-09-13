@@ -127,7 +127,7 @@ function CartList({ cart, setCart, setTotalPrice, setCount }) {
         onClick={() => {
           axios
             .post(
-              "http://funshop-backend-8077bd-25d50d-89-23-116-185.traefik.me/addCart",
+              "https://funapi.ilyadev.tech/addCart",
               cart, // Send JSON data in the POST request
               {
                 headers: {

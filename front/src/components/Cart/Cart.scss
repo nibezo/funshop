@@ -1,5 +1,8 @@
 .cart {
   width: 873px;
+  & h2 {
+    text-align: center;
+  }
   &__list {
     display: flex;
     flex-direction: column;
