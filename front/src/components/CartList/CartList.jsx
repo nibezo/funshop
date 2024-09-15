@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./CartList.scss";
 
 export default function CartList() {
-  const [cartList, setCartList] = useState([]);
+  const [data, setData] = useState({});
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get("https://funapi.ilyadev.tech/carts", {
@@ -13,29 +15,28 @@ export default function CartList() {
         },
       })
       .then((res) => {
-        const data = [];
-        for (const element of Object.keys(res.data)) {
-          data.push({ element: res.data[element] });
-        }
-        setCartList(data);
-        console.log(data);
+        setData(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
   return (
-    <div className=".cart-list">
-      <h2>Cart List</h2>
-      <ul>
-        {cartList.map((item, index) => (
-          <li key={index}>
-            <p>Name: {item[0].name}</p>
-            <p>Price: {item[0].price}</p>
-            <p>Quantity: {item[0].quantity}</p>
-          </li>
+    <div className="cart-list">
+      <h2>
+        Cart List [<code style={{ color: "red" }}>!For devs</code>]&nbsp; |
+        &nbsp;
+        <button onClick={() => navigate("/main/Shop")}>I'm not a dev</button>
+      </h2>
+      <div>
+        {Object.values(data).map((cart, index) => (
+          <div key={index} className="cart-list__cart">
+            <h4>Cart {index + 1}</h4>
+            <code>{JSON.stringify(cart)}</code>
+            <hr />
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

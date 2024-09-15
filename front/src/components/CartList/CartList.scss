@@ -1,0 +1,10 @@
+.cart-list {
+  width: 873px;
+  &__cart {
+    padding: 10px;
+    &:hover {
+      background-color: #1a1a1a;
+      border-radius: 2px;
+    }
+  }
+}
