@@ -7,6 +7,7 @@ import Login from "./components/Login/Login";
 import Main from "./components/Main/Main";
 
 import "./index.css";
+import "./adaptive.css";
 
 const router = createBrowserRouter([
   {

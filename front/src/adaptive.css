@@ -1,0 +1,59 @@
+@media screen and (max-width: 1032px) {
+  .bar__button {
+    font-size: 20px;
+  }
+  .shop,
+  .cart-list,
+  .cart-item {
+    width: 796px;
+  }
+}
+
+@media screen and (max-width: 893px) {
+  .bar__button {
+    font-size: 16px;
+  }
+  .shop,
+  .cart-list,
+  .cart,
+  .cart-item {
+    width: 646px;
+  }
+}
+
+@media screen and (max-width: 751px) {
+  .bar {
+    gap: 9px;
+  }
+  .shop,
+  .cart {
+    width: 635px;
+  }
+  .cart-list {
+    width: 600px;
+  }
+  .card {
+    height: 311px;
+    width: 173px;
+  }
+}
+
+@media screen and (max-width: 708px) {
+  h2 {
+    font-size: 20px;
+  }
+  .bar {
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 100px;
+  }
+  .bar__button {
+    flex: 1;
+  }
+  .shop,
+  .cart-list,
+  .cart,
+  .cart-item {
+    width: 470px;
+  }
+}

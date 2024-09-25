@@ -2,15 +2,22 @@ import "./Login.scss";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Spinner from "./../Spinner/Spinner";
 
 export default function Login() {
   const navigateToMain = useNavigate();
   const [isError, setIsError] = useState(false);
+  const [loaded, setLoaded] = useState(true);
   useEffect(() => {
     if (localStorage.getItem("access_token")) {
       navigateToMain("/main");
     }
   });
+
+  useEffect(() => {
+    setLoaded(false);
+  }, []);
+
   function login() {
     const loginFormData = new FormData();
     const username = document.querySelector(".login__login").value;
@@ -18,6 +25,7 @@ export default function Login() {
     if (username && password) {
       loginFormData.append("username", username);
       loginFormData.append("password", password);
+      setLoaded(true);
       const loginUser = () => {
         return axios
           .post(`https://funapi.ilyadev.tech/token`, loginFormData, {
@@ -27,6 +35,7 @@ export default function Login() {
           })
           .then((res) => {
             console.log(res.data);
+            setLoaded(false);
             localStorage.setItem("access_token", res.data.access_token);
             localStorage.setItem("token_type", res.data.token_type);
             localStorage.setItem(
@@ -47,6 +56,7 @@ export default function Login() {
   }
   return (
     <div className="login">
+      {loaded && <Spinner>Login is loading...</Spinner>}
       <h1 style={{ textAlign: "center" }}>Welcome | Fun Shop</h1>
       <input
         type="text"
