@@ -13,7 +13,7 @@ export default function Card({
   function initPriceCalculate() {
     if (!count) {
       setCount(count + 1);
-      addItem(unicID, title, price, 1);
+      addItem(unicID, title, price, 1, imageUrl);
     }
   }
 
@@ -24,7 +24,7 @@ export default function Card({
           className="card__button-sign"
           onClick={() => {
             setCount(count + 1);
-            addItem(unicID, title, price, count + 1);
+            addItem(unicID, title, price, count + 1, imageUrl);
           }}
         >
           +
@@ -36,7 +36,7 @@ export default function Card({
           className="card__button-sign"
           onClick={() => {
             setCount(count - 1);
-            addItem(unicID, title, price, count - 1);
+            addItem(unicID, title, price, count - 1, imageUrl);
           }}
         >
           -

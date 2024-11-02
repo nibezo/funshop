@@ -14,7 +14,7 @@ export default function Main() {
   const [count, setCount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  function addItem(unicID, name, price, quantity) {
+  function addItem(unicID, name, price, quantity, imageUrl) {
     const updatedCart = [...cart];
     const element = updatedCart.find((obj) => obj.unicID == unicID);
     if (quantity) {
@@ -22,7 +22,7 @@ export default function Main() {
       if (hasElement) {
         updatedCart[updatedCart.indexOf(element)].quantity = quantity;
       } else {
-        updatedCart.push({ unicID, name, price, quantity });
+        updatedCart.push({ unicID, name, price, quantity, imageUrl });
       }
     } else {
       if (quantity === 0) {
@@ -33,7 +33,6 @@ export default function Main() {
     setTotalPrice(
       updatedCart.reduce((acc, obj) => acc + obj.price * obj.quantity, 0)
     );
-    console.log(updatedCart);
     setCart(updatedCart);
   }
 

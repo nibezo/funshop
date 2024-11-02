@@ -11,19 +11,18 @@ from typing import Dict, List
 import json
 
 
-# FastAPI instance
 app = FastAPI()
 
-# Add CORS middleware to allow all origins and methods
+ 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins
+    allow_origins=["*"],  
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all methods (GET, POST, PUT, DELETE, etc.)
-    allow_headers=["*"],  # Allow all headers
+    allow_methods=["*"],   
+    allow_headers=["*"],  
 )
 
-# SQLite setup
+ 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -36,6 +35,7 @@ class CartItem(BaseModel):
     name: str
     price: float
     quantity: int
+    photo: int
 
 
 class User(Base):
@@ -54,8 +54,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 Base.metadata.create_all(bind=engine)
 
-
-# Dependency to get DB session
+ 
 def get_db():
     db = SessionLocal()
     try:

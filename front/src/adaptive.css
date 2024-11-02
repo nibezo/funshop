@@ -39,6 +39,9 @@
 }
 
 @media screen and (max-width: 708px) {
+  .cart-list h2 {
+    text-align: center;
+  }
   h2 {
     font-size: 20px;
   }
@@ -55,5 +58,80 @@
   .cart,
   .cart-item {
     width: 470px;
+  }
+}
+
+@media screen and (max-width: 569px) {
+  .cart-list {
+    width: 380px;
+  }
+  .login h1 {
+    font-size: 36px;
+  }
+  .spinner__text {
+    font-size: 36px;
+  }
+  .bar__button {
+    flex: auto;
+  }
+  .bar {
+    flex-direction: row;
+    width: 62%;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 488px) {
+  .cart-list h2 {
+    font-size: 16px;
+  }
+
+  .cart-list__cart code {
+    word-break: break-word;
+  }
+  .update__form {
+    flex-direction: column;
+  }
+  .bar {
+    width: 74%;
+  }
+  .shop,
+  .cart-list,
+  .cart,
+  .cart-item {
+    width: 390px;
+  }
+  .cart-list {
+    width: 300px;
+  }
+  .card {
+    width: 261px;
+    height: 360px;
+  }
+  .shop {
+    margin-bottom: 40px;
+  }
+  .card__image {
+    height: 234px;
+    width: 259px;
+  }
+}
+
+@media screen and (max-width: 407px) {
+  .update__input,
+  .update__button {
+    font-size: 16px;
+  }
+  .shop {
+    width: 290px;
+  }
+  .bar {
+    width: 94%;
+  }
+  body {
+    min-width: 190px;
+  }
+  .cart {
+    width: 300px;
   }
 }

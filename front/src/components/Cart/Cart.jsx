@@ -31,6 +31,7 @@ function CartItem({
   setCart,
   setCount,
   setTotalPrice,
+  imageUrl,
 }) {
   function changeQuantity(cart, setCart, unicID, operation) {
     const updatedCart = [...cart];
@@ -58,6 +59,10 @@ function CartItem({
   return (
     <div className="cart-item">
       <div className="cart-item__subs">
+        <div className="cart-item__sub-wrapper">
+          <img className="cart-item__sub-img" src={imageUrl} alt="a good" />
+          <div className="cart-item__sub-img-container"></div>
+        </div>
         <p className="cart-item__sub">
           ID: <b>{unicID}</b>; &nbsp;
         </p>
@@ -96,6 +101,7 @@ function CartItem({
 function CartList({ cart, setCart, setTotalPrice, setCount }) {
   const [isModal, setIsModal] = useState(false);
   const [cartId, setCartId] = useState(0);
+  cart.map((obj) => console.log(obj));
   return (
     <>
       <button
@@ -115,6 +121,7 @@ function CartList({ cart, setCart, setTotalPrice, setCount }) {
             name={item.name}
             price={item.price}
             quantity={item.quantity}
+            imageUrl={item.imageUrl}
             cart={cart}
             setCart={setCart}
             setTotalPrice={setTotalPrice}
