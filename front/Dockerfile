@@ -1,5 +1,6 @@
+# Stage 1: Build the frontend with Node.js
 # Step 1: Use an official Node.js runtime as a parent image
-FROM node:18-alpine
+FROM node:18-alpine AS build
 
 # Step 2: Set the working directory inside the container
 WORKDIR /admin
@@ -13,18 +14,21 @@ RUN npm install
 # Step 5: Copy the rest of the application code to the container
 COPY . .
 
-# Step 6: Expose port 5173 (the default port used by Vite)
-EXPOSE 5173
-
-# Step 7: Build the application for production
+# Step 6: Build the application for production
 RUN npm run build
 
-# Step 8: Use an NGINX image to serve the built application
+# Stage 2: Serve the frontend with NGINX
+# Step 7: Use an NGINX image to serve the built application
 FROM nginx:alpine
-COPY --from=0 /admin/dist /usr/share/nginx/html
 
-# Step 9: Expose port 80
+# Step 8: Copy custom NGINX configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Step 9: Copy the built application from the first stage
+COPY --from=build /admin/dist /usr/share/nginx/html
+
+# Step 10: Expose port 80
 EXPOSE 80
 
-# Step 10: Start NGINX
+# Step 11: Start NGINX
 CMD ["nginx", "-g", "daemon off;"]
