@@ -2,14 +2,14 @@ from fastapi import FastAPI, Depends, HTTPException, Query
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import create_engine, Column, Integer, String, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from passlib.context import CryptContext
 from jose import JWTError, jwt
 from typing import Dict, List
 import json
-import uuid  # Import uuid for unique cart IDs
+import uuid 
 
 app = FastAPI()
 
@@ -26,8 +26,15 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
+# New class for goods
+class Good(Base):
+    __tablename__ = "goods"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True, index=True)
+    quantity = Column(Integer)  # Available quantity
+
 class CartItem(BaseModel):
-    unicID: int
+    orderNumber: str  # Change unicID to orderNumber
     name: str
     price: float
     quantity: int
@@ -108,7 +115,28 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: SessionLocal = Dep
 def add_cart(cart_items: List[CartItem], db: SessionLocal = Depends(get_db), user: User = Depends(get_current_user)):
     carts = json.loads(user.user_carts) if user.user_carts else {}
     new_cart_id = str(uuid.uuid4())  # Generate a unique UUID for the cart ID
-    carts[new_cart_id] = [item.dict() for item in cart_items]
+    new_cart_items = []
+
+    for item in cart_items:
+        good = db.query(Good).filter(Good.name == item.name).first()
+        if not good:
+            raise HTTPException(status_code=404, detail=f"Good '{item.name}' not found")
+        if good.quantity < item.quantity:
+            raise HTTPException(status_code=400, detail=f"Not enough '{item.name}' in stock")
+
+        # Deduct the quantity from the available stock
+        good.quantity -= item.quantity
+        db.commit()
+
+        new_cart_items.append({
+            "orderNumber": f"{uuid.uuid4().int:010}",  # Generate a formatted order number
+            "name": item.name,
+            "price": item.price,
+            "quantity": item.quantity,
+            "photo": item.photo
+        })
+
+    carts[new_cart_id] = new_cart_items
     user.user_carts = json.dumps(carts)
     db.commit()
     return {"cart_id": new_cart_id}
@@ -147,3 +175,35 @@ def delete_cart(cart_id: str = Query(...), db: SessionLocal = Depends(get_db), u
 def get_all_carts(db: SessionLocal = Depends(get_db), user: User = Depends(get_current_user)):
     carts = json.loads(user.user_carts or '{}')
     return carts
+
+@app.get("/goods")
+def get_available_goods(db: SessionLocal = Depends(get_db)):
+    goods = db.query(Good).all()
+    available_goods = {good.name: good.quantity for good in goods if good.quantity > 0}
+    return available_goods
+
+# Seed initial goods data (this should only run once or be managed elsewhere)
+@app.on_event("startup")
+def startup_event():
+    db = SessionLocal()
+    goods_data = [
+        {"name": "2GIS Ferret", "quantity": 54612},
+        {"name": "Bender", "quantity": 46154},
+        {"name": "Indignant cat", "quantity": 42},
+        {"name": "Sad hamster 🧐", "quantity": 31},
+        {"name": "Happy cat", "quantity": 675},
+        {"name": "Ferret", "quantity": 2434},
+        {"name": "Misha", "quantity": 5},
+        {"name": "Calling monkey", "quantity": 10},
+        {"name": "Smiling monkey", "quantity": 652},
+        {"name": "Angry ferret", "quantity": 34},
+        {"name": "slyCat", "quantity": 344},
+        {"name": "TV", "quantity": 4353},
+    ]
+
+    for good in goods_data:
+        if not db.query(Good).filter(Good.name == good["name"]).first():
+            new_good = Good(name=good["name"], quantity=good["quantity"])
+            db.add(new_good)
+    db.commit()
+    db.close()

@@ -133,25 +133,19 @@ function CartList({ cart, setCart, setTotalPrice, setCount }) {
         className="cart__complete-btn"
         onClick={() => {
           axios
-            .post(
-              "https://funapi.ilyadev.tech/addCart",
-              cart, // Send JSON data in the POST request
-              {
-                headers: {
-                  "Content-Type": "application/json", // Set content type to JSON
-                  Authorization: `Bearer ${localStorage.getItem(
-                    "access_token"
-                  )}`, // Add "Bearer" before token
-                },
-              }
-            )
+            .post("https://funapi.ilyadev.tech/addCart", cart, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+              },
+            })
             .then((res) => {
               setCartId(res.data.cart_id);
             })
             .catch((err) => {
-              console.error(err); // Change to `console.error` for better logging of errors
+              console.error(err);
             });
-          setIsModal(true); // Ensure this function is updating the state correctly
+          setIsModal(true);
         }}
       >
         Complete your order and get the cart ID
