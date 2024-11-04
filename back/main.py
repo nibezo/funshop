@@ -127,9 +127,14 @@ def add_cart(cart_items: List[CartItem], db: SessionLocal = Depends(get_db), use
         # Deduct the quantity from the available stock
         good.quantity -= item.quantity
         db.commit()
-
+        def generate_order_number():
+            # Generate a UUID and take its integer representation
+            unique_int = uuid.uuid4().int
+            # Format the integer as a string, ensure at least 8 digits with leading zeros
+            formatted_order_number = f"{unique_int % 100000000:08}"  # Limit to 8 digits
+            return formatted_order_number
         new_cart_items.append({
-            "orderNumber": f"{uuid.uuid4().int:010}",  # Generate a formatted order number
+            "orderNumber": f"{generate_order_number()}", 
             "name": item.name,
             "price": item.price,
             "quantity": item.quantity,
